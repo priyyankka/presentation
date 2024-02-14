@@ -1,0 +1,23 @@
+#####Line Graph
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample DataFrame
+data = {'date': ['2018-01-01', '2019-01-02', '2020-01-03', '2021-01-04', '2022-01-05'],
+        'variable1': [10, 15, 25, 30, 35],
+        'variable2': [5, 10, 20, 25, 30]}
+
+df = pd.DataFrame(data)
+df['date'] = pd.to_datetime(df['date']).dt.strftime('%b-%y')
+
+# Plot line graph
+plt.figure(figsize=(10, 6))
+plt.plot(df['date'], df['variable1'], marker='o', linestyle='-', color='b', label='Variable 1')
+plt.plot(df['date'], df['variable2'], marker='s', linestyle='--', color='r', label='Variable 2')
+plt.title('Line Graph with Date X-axis')
+plt.xlabel('Date')
+plt.ylabel('Value')
+plt.legend()
+#plt.grid(True)
+plt.tight_layout()
+plt.show()
