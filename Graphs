@@ -21,3 +21,30 @@ plt.legend()
 #plt.grid(True)
 plt.tight_layout()
 plt.show()
+
+####Line Filled Graph
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Sample data
+data = {'x': [1, 2, 3, 4, 5],
+        'y': [10, 15, 25, 30, 35]}
+
+df = pd.DataFrame(data)
+
+# Plot filled line graph
+plt.figure(figsize=(10, 6))
+
+# Plot the line
+plt.plot(df['x'], df['y'], color='blue', linewidth=2, label='Line')
+
+# Fill the area below the line
+plt.fill_between(df['x'], df['y'], color='lightblue', alpha=0.5)
+
+plt.title('Filled Line Graph from X-axis')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
