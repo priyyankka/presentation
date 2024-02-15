@@ -1,0 +1,48 @@
+import pandas as pd
+from pptx import Presentation
+from pptx.util import Inches
+
+# Sample DataFrame
+data = {
+    'Name': ['John', 'Emma', 'Michael', 'Sophia'],
+    'Age': [30, 25, 35, 28],
+    'Salary': [50000, 60000, 70000, 55000]
+}
+
+df = pd.DataFrame(data)
+
+# Format DataFrame table
+styled_table = df.style \
+    .set_properties(**{'font-size': '12pt', 'font-family': 'Arial'}) \
+    .set_table_styles([{'selector': 'th', 'props': [('font-size', '14pt'), ('font-family', 'Arial')]}]) \
+    .set_caption('Employee Data')  # Add caption
+
+# Create PowerPoint presentation
+prs = Presentation()
+
+# Add a slide
+slide_layout = prs.slide_layouts[5]  # Choose layout (Title and Content)
+slide = prs.slides.add_slide(slide_layout)
+
+# Define table dimensions and position
+left = Inches(1)
+top = Inches(1.5)
+width = Inches(8)
+height = Inches(3)
+
+# Add table to slide
+table_placeholder = slide.shapes.add_table(df.shape[0] + 1, df.shape[1], left, top, width, height).table
+
+# Insert headers
+for col_index, col_name in enumerate(df.columns):
+    table_placeholder.cell(0, col_index).text = col_name
+
+# Insert DataFrame data
+for row_index, row in enumerate(df.itertuples(), start=1):
+    for col_index, value in enumerate(row[1:], start=0):
+        table_placeholder.cell(row_index, col_index).text = str(value)
+
+import os
+os.chdir('C:/Users/priya/OneDrive/Desktop/pptx/')
+# Save presentation
+prs.save('output.pptx')
