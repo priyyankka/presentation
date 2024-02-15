@@ -31,6 +31,12 @@ def replace_text_box_with_chart(Text_Box_Name,data,pptx_file):
                 # Insert headers
                 for col_index, col_name in enumerate(df.columns):
                     table_placeholder.cell(0, col_index).text = col_name
+                    table_placeholder.cell(0, col_index).text = col_name
+                    # Set font properties for headers
+                    cell = table_placeholder.cell(0, col_index)
+                    font = cell.text_frame.paragraphs[0].font
+                    font.bold = True
+                    font.size = Pt(12)
 
                 # Insert DataFrame data
                 for row_index, row in enumerate(df.itertuples(), start=1):
