@@ -1,0 +1,52 @@
+import pandas as pd
+from pptx import Presentation
+from pptx.util import Inches
+import os
+os.chdir('C:/Users/priya/OneDrive/Desktop/pptx/')
+# Sample DataFrame
+data = {
+    'Name': ['John', 'Emma', 'Michael', 'Sophia'],
+    'Age': [30, 25, 35, 28],
+    'Salary': [50000, 60000, 70000, 55000]
+}
+
+df = pd.DataFrame(data)
+
+# Load existing PowerPoint presentation
+pptx_file = "abc.pptx"
+prs = Presentation(pptx_file)
+
+# Get the slide you want to modify (e.g., slide 0 for the first slide)
+slide = prs.slides[0]
+
+# Remove existing text box (if any)
+for shape in slide.shapes:
+    if shape.has_text_frame and shape.text.strip() == "Replace me with DataFrame":
+        shape.text_frame.clear()  # Clear existing content
+        shape._element.getparent().remove(shape._element)  # Remove the text box
+
+# Add a new slide
+slide_layout = prs.slide_layouts[5]  # Choose layout (Title and Content)
+slide = prs.slides.add_slide(slide_layout)
+
+# Define table dimensions and position
+left = Inches(1)
+top = Inches(1.5)
+width = Inches(8)
+height = Inches(3)
+
+# Add table to slide
+table_placeholder = slide.shapes.add_table(df.shape[0] + 1, df.shape[1], left, top, width, height).table
+
+# Insert headers
+for col_index, col_name in enumerate(df.columns):
+    table_placeholder.cell(0, col_index).text = col_name
+
+# Insert DataFrame data
+for row_index, row in enumerate(df.itertuples(), start=1):
+    for col_index, value in enumerate(row[1:], start=0):
+        table_placeholder.cell(row_index, col_index).text = str(value)
+
+# Save modified presentation
+output_pptx_file = "output.pptx"
+prs.save(output_pptx_file)
