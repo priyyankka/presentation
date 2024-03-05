@@ -39,3 +39,30 @@ ppt.slides[0].shapes.add_picture(img_path, left_inch, top_inch, width_inch, heig
 
 # Save the modified presentation
 ppt.save('modified_presentation.pptx')
+
+
+
+
+
+import matplotlib.pyplot as plt
+
+# Sample data
+categories = ['Category A', 'Category B', 'Category C']
+values1 = [10, 15, 20]
+values2 = [12, 18, 22]
+
+# Plotting the bar chart
+bar_width = 0.35
+index = range(len(categories))
+
+plt.bar(index, values1, bar_width, label='Group 1')
+plt.bar([i + bar_width for i in index], values2, bar_width, label='Group 2')
+
+plt.xlabel('Categories')
+plt.ylabel('Values')
+plt.title('Two-Column Bar Chart')
+plt.xticks([i + bar_width/2 for i in index], categories)
+plt.legend()
+
+plt.tight_layout()
+plt.show()
