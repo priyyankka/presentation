@@ -42,27 +42,37 @@ ppt.save('modified_presentation.pptx')
 
 
 
-
-
 import matplotlib.pyplot as plt
+import numpy as np
 
-# Sample data
-categories = ['Category A', 'Category B', 'Category C']
-values1 = [10, 15, 20]
-values2 = [12, 18, 22]
+# Data
+categories = ['Category A', 'Category B', 'Category C', 'Category D']
+values1 = [20, 35, 30, 25]
+values2 = [25, 30, 35, 40]
 
-# Plotting the bar chart
+# Set up the figure and axis
+fig, ax = plt.subplots()
+
+# Set width of bar
 bar_width = 0.35
-index = range(len(categories))
 
-plt.bar(index, values1, bar_width, label='Group 1')
-plt.bar([i + bar_width for i in index], values2, bar_width, label='Group 2')
+# Set position of bar on X axis
+r1 = np.arange(len(values1))
+r2 = [x + bar_width for x in r1]
 
-plt.xlabel('Categories')
-plt.ylabel('Values')
-plt.title('Two-Column Bar Chart')
-plt.xticks([i + bar_width/2 for i in index], categories)
+# Make the plot
+plt.bar(r1, values1, color='b', width=bar_width, edgecolor='grey', label='Group 1')
+plt.bar(r2, values2, color='r', width=bar_width, edgecolor='grey', label='Group 2')
+
+# Add xticks on the middle of the group bars
+plt.xlabel('Categories', fontweight='bold')
+plt.xticks([r + bar_width/2 for r in range(len(values1))], categories)
+
+# Add ylabel
+plt.ylabel('Values', fontweight='bold')
+
+# Add legend
 plt.legend()
 
-plt.tight_layout()
+# Show plot
 plt.show()
