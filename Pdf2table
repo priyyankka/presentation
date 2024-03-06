@@ -1,0 +1,39 @@
+import fitz
+
+def extract_picture_table_from_pdf(pdf_path, page_number):
+    # Open the PDF
+    pdf_document = fitz.open(pdf_path)
+    
+    # Get the specified page
+    page = pdf_document.load_page(page_number)
+    
+    # Extract images from the page
+    images = page.get_images(full=True)
+    
+    picture_table = []
+    
+    for img_index, img_info in enumerate(images):
+        # Get the image data
+        img_data = img_info[0]
+        
+        # Get the image size
+        img_xref = img_data[0]
+        img_rect = img_data[1]
+        img_length = img_data[3]
+        
+        # Add image details to the table
+        picture_table.append({
+            "Index": img_index,
+            "XREF": img_xref,
+            "Rect": img_rect,
+            "Length": img_length
+        })
+    
+    return picture_table
+
+# Example usage:
+pdf_path = "example.pdf"
+page_number = 0  # Change this to the desired page number
+
+picture_table = extract_picture_table_from_pdf(pdf_path, page_number)
+print(picture_table)
