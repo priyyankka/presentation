@@ -195,3 +195,35 @@ table.scale(1, 1.5)
 
 plt.show()
 
+
+
+import matplotlib.pyplot as plt
+
+data = [['Header 1', 'Header 2', 'Header 3'],
+        ['Row 1', 1, 2],
+        ['Row 2', 4, 5],
+        ['Row 3', 7, 8]]
+
+# Create a figure and axis
+fig, ax = plt.subplots()
+
+# Hide the axes
+ax.axis('off')
+
+# Create the table
+table = ax.table(cellText=data, loc='center', cellLoc='center')
+
+# Iterate through table cells to resolve tuple values
+for i in range(len(data)):
+    for j in range(len(data[i])):
+        if isinstance(data[i][j], tuple):
+            table[(i, j)].get_text().set_text(data[i][j][0])
+
+# Adjust font size
+table.auto_set_font_size(False)
+table.set_fontsize(14)
+
+# Adjust cell heights
+table.scale(1, 1.5)
+
+plt.show()
