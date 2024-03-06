@@ -115,3 +115,41 @@ table.scale(1, 1.5)
 
 plt.show()
 
+import matplotlib.pyplot as plt
+
+data = [[1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]]
+
+# Create a figure and axis
+fig, ax = plt.subplots()
+
+# Hide the axes
+ax.axis('off')
+
+# Create the table
+table = ax.table(cellText=data, loc='center', cellLoc='center')
+
+# Hide the row and column headers
+ax.axis('tight')
+ax.axis('off')
+
+# Merge cells for the header
+header_cells = table.get_celld()
+header_cells[(0, 0)].set_visible(False)
+header_cells[(0, 1)].set_visible(False)
+header_cells[(0, 2)].set_visible(False)
+
+# Create a merged header cell
+table_cells = header_cells[(0, 1)].get_visible_edges()
+header_cells[(0, 1)].set_text('Merged Header')
+header_cells[(0, 1)].set_visible_edges(table_cells)
+
+# Adjust font size
+table.auto_set_font_size(False)
+table.set_fontsize(14)
+
+# Adjust cell heights
+table.scale(1, 1.5)
+
+plt.show()
