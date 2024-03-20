@@ -1,0 +1,32 @@
+import pandas as pd
+
+def compare_excel_sheets(file1, file2):
+    # Read Excel files into dataframes
+    xls1 = pd.ExcelFile(file1)
+    xls2 = pd.ExcelFile(file2)
+    
+    # Get sheet names from both Excel files
+    sheet_names1 = xls1.sheet_names
+    sheet_names2 = xls2.sheet_names
+    
+    if sheet_names1 != sheet_names2:
+        print("Sheet names are different.")
+        return False
+    
+    # Loop through each sheet and compare dataframes
+    for sheet_name in sheet_names1:
+        df1 = pd.read_excel(file1, sheet_name=sheet_name)
+        df2 = pd.read_excel(file2, sheet_name=sheet_name)
+        
+        if not df1.equals(df2):
+            print(f"Dataframes in sheet '{sheet_name}' are not equal.")
+            return False
+    
+    print("All dataframes are equal.")
+    return True
+
+# Example usage
+file1 = "path/to/first_excel_file.xlsx"
+file2 = "path/to/second_excel_file.xlsx"
+
+compare_excel_sheets(file1, file2)
